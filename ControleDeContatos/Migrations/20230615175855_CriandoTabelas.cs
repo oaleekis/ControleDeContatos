@@ -5,7 +5,7 @@
 namespace ControleDeContatos.Migrations
 {
     /// <inheritdoc />
-    public partial class CriandoTabelaContatos : Migration
+    public partial class CriandoTabelas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,6 +24,22 @@ namespace ControleDeContatos.Migrations
                 {
                     table.PrimaryKey("PK_Contatos", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Produtos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PrecoCompra = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PrecoVenda = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Quantidade = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Produtos", x => x.Id);
+                });
         }
 
         /// <inheritdoc />
@@ -31,6 +47,9 @@ namespace ControleDeContatos.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Contatos");
+
+            migrationBuilder.DropTable(
+                name: "Produtos");
         }
     }
 }

@@ -1,0 +1,61 @@
+﻿@model List<ProdutoModel>
+@{
+    ViewData["Title"] = "Lista de produtos";
+}
+<h1 class="display-4">Produtos</h1>
+<div>
+    <a class="btn btn-primary" role="button" asp-controller="Produto" asp-action="Criar">Novo</a>
+</div>
+<div>
+
+    @if(TempData["MensagemSucesso"] != null)
+    {    
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert">X</button>
+        @TempData["MensagemSucesso"]
+    </div>
+    }
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert">X</button>
+            @TempData["MensagemErro"]
+        </div>
+    }
+    <br />
+
+    <table class="table" id="table-contatos">
+        <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Preço de Compra</th>
+                <th scope="col">Preço de Venda</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Total para venda</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (ProdutoModel produto in Model)
+                {
+                    <tr>
+                        <td>@produto.Nome</td>
+                        <td>R$ @produto.PrecoCompra</td>
+                        <td>R$ @produto.PrecoVenda</td>
+                        <td>@produto.Quantidade</td>
+                        <td>R$ @produto.TotalParaVenda()</td>
+                        
+                        <td>
+                            <div class="btn-group" role="group" style="display:flex; justify-content:end;">
+                                <a role="button" class="btn btn-primary" asp-route-id="@produto.Id" asp-controller="Produto" asp-action="Editar">Editar</a>
+                                <a role="button" class="btn btn-danger" asp-route-id="@produto.Id" asp-controller="Produto" asp-action="ApagarConfirmacao">Apagar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
